@@ -1,0 +1,42 @@
+title: |-
+  XCFramework
+summary: |
+  Archive project and generate XCFramework
+description: |
+  XCFramework contains multiple platform-specific variants to be used by clients on different platforms, including Simulator builds. XCFramework can also contain a macOS variant of your framework built for AppKit and another macOS variant of your framework built for UIKit.
+website: https://github.com/orbitekk/bitrise-step-xcframework.git
+source_code_url: https://github.com/orbitekk/bitrise-step-xcframework.git
+support_url: https://github.com/orbitekk/bitrise-step-xcframework.git
+host_os_tags:
+  - osx-10.10
+  - ubuntu-16.04
+
+project_type_tags:
+  - ios
+  - macos
+
+type_tags:
+  - build
+
+is_requires_admin_user: true
+is_always_run: false
+is_skippable: false
+run_if: ""
+
+toolkit:
+  bash:
+    entry_file: step.sh
+
+inputs:
+  - framework_name:
+    opts:
+      title: "Framework name"
+      summary: ""
+      description: |
+        The name of the archived library.
+      is_required: true
+  - output_dir: $BITRISE_DEPLOY_DIR
+    opts:
+      title: Output directory path
+      summary: This directory will contain the generated artifact.
+      is_required: true
