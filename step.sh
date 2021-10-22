@@ -16,12 +16,11 @@ function archive {
 }
 
 function bitcodeSymbols {
-  PATHS=($(pwd)/archives/$NAME/$1/$NAME.xcarchive/BCSymbolMaps/*)
+  UDIDs=$(dwarfdump --uuid $2 | cut -d ' ' -f2)
   SYMBOLS=""
-  for path in $PATHS; do
-    if [ -f "$path" ]; then
-      SYMBOLS="$SYMBOLS -debug-symbols $path "
-    fi
+  for udid in $UDIDs; do
+    PATH=$(pwd)/archives/$NAME/$1/$NAME.xcarchive/BCSymbolMaps/$udid.bcsymbolmap
+    SYMBOLS="$SYMBOLS -debug-symbols $PATH "
   done
   echo $SYMBOLS
 }
@@ -55,17 +54,17 @@ xcodebuild -create-xcframework \
 -debug-symbols "$(pwd)/archives/$NAME/macOS Catalyst/$NAME.xcarchive/dSYMs/$NAME.framework.dSYM" \
 -framework "archives/$NAME/iOS/$NAME.xcarchive/Products/Library/Frameworks/$NAME.framework" \
 -debug-symbols "$(pwd)/archives/$NAME/iOS/$NAME.xcarchive/dSYMs/$NAME.framework.dSYM" \
-$(bitcodeSymbols "iOS") \
+$(bitcodeSymbols "iOS" "$(pwd)/archives/$NAME/iOS/$NAME.xcarchive/dSYMs/$NAME.framework.dSYM") \
 -framework "archives/$NAME/iOS Simulator/$NAME.xcarchive/Products/Library/Frameworks/$NAME.framework" \
 -debug-symbols "$(pwd)/archives/$NAME/iOS Simulator/$NAME.xcarchive/dSYMs/$NAME.framework.dSYM" \
 -framework "archives/$NAME/watchOS/$NAME.xcarchive/Products/Library/Frameworks/$NAME.framework" \
 -debug-symbols "$(pwd)/archives/$NAME/watchOS/$NAME.xcarchive/dSYMs/$NAME.framework.dSYM" \
-$(bitcodeSymbols "watchOS") \
+$(bitcodeSymbols "watchOS" "$(pwd)/archives/$NAME/watchOS/$NAME.xcarchive/dSYMs/$NAME.framework.dSYM") \
 -framework "archives/$NAME/watchOS Simulator/$NAME.xcarchive/Products/Library/Frameworks/$NAME.framework" \
 -debug-symbols "$(pwd)/archives/$NAME/watchOS Simulator/$NAME.xcarchive/dSYMs/$NAME.framework.dSYM" \
 -framework "archives/$NAME/tvOS/$NAME.xcarchive/Products/Library/Frameworks/$NAME.framework" \
 -debug-symbols "$(pwd)/archives/$NAME/tvOS/$NAME.xcarchive/dSYMs/$NAME.framework.dSYM" \
-$(bitcodeSymbols "tvOS") \
+$(bitcodeSymbols "tvOS" "$(pwd)/archives/$NAME/tvOS/$NAME.xcarchive/dSYMs/$NAME.framework.dSYM") \
 -framework "archives/$NAME/tvOS Simulator/$NAME.xcarchive/Products/Library/Frameworks/$NAME.framework" \
 -debug-symbols "$(pwd)/archives/$NAME/tvOS Simulator/$NAME.xcarchive/dSYMs/$NAME.framework.dSYM" \
 -output "archives/$NAME.xcframework"
