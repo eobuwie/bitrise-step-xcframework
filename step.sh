@@ -1,13 +1,15 @@
 #!/bin/bash
 set -ex
 
+WORKSPACE=${workspace}
 NAME=${framework_name}
 
 function archive {
   xcodebuild archive \
-  -scheme $1 \
-  -destination "$2" \
-  -archivePath "$3" \
+  -workspace $1.xcworkspace \
+  -scheme $2 \
+  -destination "$3" \
+  -archivePath "$4" \
   -configuration Release \
   SKIP_INSTALL=NO \
   BUILD_LIBRARY_FOR_DISTRIBUTION=YES \
@@ -27,23 +29,23 @@ function bitcodeSymbols {
 
 # macOS
 
-archive $NAME "generic/platform=macOS" "archives/$NAME/macOS/$NAME"
-archive $NAME "generic/platform=macOS,variant=Mac Catalyst" "archives/$NAME/macOS Catalyst/$NAME"
+archive $WORKSPACE $NAME-macos "generic/platform=macOS" "archives/$NAME/macOS/$NAME"
+archive $WORKSPACE $NAME-ios "generic/platform=macOS,variant=Mac Catalyst" "archives/$NAME/macOS Catalyst/$NAME"
 
 # iOS
 
-archive $NAME "generic/platform=iOS" "archives/$NAME/iOS/$NAME"
-archive $NAME "generic/platform=iOS Simulator" "archives/$NAME/iOS Simulator/$NAME"
+archive $WORKSPACE $NAME-ios "generic/platform=iOS" "archives/$NAME/iOS/$NAME"
+archive $WORKSPACE $NAME-ios "generic/platform=iOS Simulator" "archives/$NAME/iOS Simulator/$NAME"
 
 # watchOS
 
-archive $NAME "generic/platform=watchOS" "archives/$NAME/watchOS/$NAME"
-archive $NAME "generic/platform=watchOS Simulator" "archives/$NAME/watchOS Simulator/$NAME"
+archive $WORKSPACE $NAME-watchos "generic/platform=watchOS" "archives/$NAME/watchOS/$NAME"
+archive $WORKSPACE $NAME-watchos "generic/platform=watchOS Simulator" "archives/$NAME/watchOS Simulator/$NAME"
 
 # tvOS
 
-archive $NAME "generic/platform=tvOS" "archives/$NAME/tvOS/$NAME"
-archive $NAME "generic/platform=tvOS Simulator" "archives/$NAME/tvOS Simulator/$NAME"
+archive $WORKSPACE $NAME-tvos "generic/platform=tvOS" "archives/$NAME/tvOS/$NAME"
+archive $WORKSPACE $NAME-tvos "generic/platform=tvOS Simulator" "archives/$NAME/tvOS Simulator/$NAME"
 
 # xcframework
 

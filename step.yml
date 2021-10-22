@@ -35,6 +35,13 @@ inputs:
       description: |
         The name of the archived library.
       is_required: true
+  - workspace:
+    opts:
+      title: "Workspace name"
+      summary: ""
+      description: |
+        The name of the workspace.
+      is_required: true
   - output_dir: $BITRISE_DEPLOY_DIR
     opts:
       title: Output directory path
