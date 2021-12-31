@@ -42,6 +42,41 @@ inputs:
       description: |
         The name of the workspace.
       is_required: true
+  - macos: "yes"
+    opts:
+      title: "Build framework for macOS"
+      is_required: true
+      value_options:
+        - "no"
+        - "yes"
+  - macoscatalyst: "yes"
+    opts:
+      title: "Build framework for macOS Catalyst"
+      is_required: true
+      value_options:
+        - "no"
+        - "yes"
+  - ios: "yes"
+    opts:
+      title: "Build framework for iOS"
+      is_required: true
+      value_options:
+        - "no"
+        - "yes"
+  - tvos: "yes"
+    opts:
+      title: "Build framework for tvOS"
+      is_required: true
+      value_options:
+        - "no"
+        - "yes"
+  - watchos: "yes"
+    opts:
+      title: "Build framework for watchOS"
+      is_required: true
+      value_options:
+        - "no"
+        - "yes"
   - output_dir: $BITRISE_DEPLOY_DIR
     opts:
       title: Output directory path
